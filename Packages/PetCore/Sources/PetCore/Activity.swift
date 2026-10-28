@@ -62,7 +62,7 @@ public enum Forecast {
         calendar: Calendar = .current
     ) -> [(date: Date, state: PetState)] {
         var current = state.advanced(to: start, calendar: calendar)
-        var result: [(Date, PetState)] = [(start, current)]
+        var result: [(date: Date, state: PetState)] = [(start, current)]
         var t = start
         for _ in 1..<max(1, count) {
             t = t.addingTimeInterval(interval)
@@ -129,7 +129,8 @@ public enum ReminderPlanner {
             }
         }
 
-        if let (_, date) = Evolution.nextStageDate(for: state), date > now, date < end {
+        if let next = Evolution.nextStageDate(for: state), next.1 > now, next.1 < end {
+            let date = next.1
             // Don't wake anyone up for it; announce in the morning instead.
             let announce = DayCycle.isNight(date, calendar: calendar) ? DayCycle.nextWake(after: date, calendar: calendar) : date
             reminders.append(CareReminder(kind: .evolving, date: announce))
