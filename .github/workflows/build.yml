@@ -1,0 +1,78 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  core-tests:
+    name: Core logic tests
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run PetCore tests
+        run: swift test --package-path Packages/PetCore
+
+  ipa:
+    name: Unsigned IPA
+    runs-on: macos-15
+    needs: core-tests
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Xcode project
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Build for device (unsigned)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project PocketCompanion.xcodeproj \
+            -scheme PocketCompanion \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee build.log | grep -E "error:|warning: .*PocketCompanion|BUILD (SUCCEEDED|FAILED)" || true
+          grep -q "BUILD SUCCEEDED" build.log
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+
+      - name: Package IPA
+        # Ad-hoc signatures carry the App Group entitlements so sideloading tools re-sign with them.
+        run: |
+          APP=build/Build/Products/Release-iphoneos/PocketCompanion.app
+          codesign -f -s - --entitlements Widget/CompanionWidget.entitlements "$APP/PlugIns/CompanionWidget.appex"
+          codesign -f -s - --entitlements App/PocketCompanion.entitlements "$APP"
+          mkdir Payload
+          cp -R "$APP" Payload/
+          zip -qry PocketCompanion.ipa Payload
+          ls -lh PocketCompanion.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PocketCompanion-ipa
+          path: PocketCompanion.ipa
+
+      - name: Publish "latest" release
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Latest build
+          prerelease: true
+          make_latest: false
+          body: |
+            Unsigned build of ${{ github.sha }}. Install with Sideloadly or AltStore, see the README.
+          files: PocketCompanion.ipa
