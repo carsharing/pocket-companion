@@ -1,49 +1,50 @@
 import Foundation
 
 /// Life stages. The companion always moves forward and never dies.
+/// `egg` is the newborn kit asleep in its den (the name is kept for saved data).
 public enum Stage: String, Codable, CaseIterable, Sendable {
     case egg, baby, child, adult
 
     public var displayName: String {
         switch self {
-        case .egg: return "Egg"
-        case .baby: return "Baby"
-        case .child: return "Child"
+        case .egg: return "Newborn"
+        case .baby: return "Kit"
+        case .child: return "Young fox"
         case .adult: return "Adult"
         }
     }
 }
 
-/// The adult a child grows into depends on how it was cared for.
+/// The adult a young fox grows into depends on how it was cared for.
 public enum AdultForm: String, Codable, CaseIterable, Sendable {
     /// Balanced, attentive care.
-    case sprout
+    case fox
+    /// Lots of cuddles while kept very happy.
+    case kitsune
     /// Played with a lot.
-    case bouncy
+    case bunny
     /// Fed a lot.
-    case gourmet
-    /// Petted a lot while kept very happy.
-    case sparkle
-    /// Left alone a lot. Still cute, just dreamy.
-    case cloud
+    case cat
+    /// Left alone a lot. Still cute, just fiercely independent.
+    case dragon
 
     public var displayName: String {
         switch self {
-        case .sprout: return "Sprout"
-        case .bouncy: return "Bouncy"
-        case .gourmet: return "Gourmet"
-        case .sparkle: return "Sparkle"
-        case .cloud: return "Cloud"
+        case .fox: return "Fox"
+        case .kitsune: return "Kitsune"
+        case .bunny: return "Bunny"
+        case .cat: return "Cat"
+        case .dragon: return "Little Dragon"
         }
     }
 
     public var blurb: String {
         switch self {
-        case .sprout: return "Raised with balanced, steady care. Grew a little leaf!"
-        case .bouncy: return "So many games together. Can't stop hopping."
-        case .gourmet: return "Loves snacks more than anything."
-        case .sparkle: return "Showered with affection. Glows with joy."
-        case .cloud: return "Spent a lot of time alone, daydreaming."
+        case .fox: return "Raised with balanced, steady care. Grew into a true fox."
+        case .kitsune: return "Showered with affection until magic bloomed: three glowing tails!"
+        case .bunny: return "So many games together. Can't stop hopping."
+        case .cat: return "Loves snacks more than anything. Purrs after every meal."
+        case .dragon: return "Spent a lot of time alone and grew wings of independence."
         }
     }
 }
@@ -60,7 +61,7 @@ public enum Mood: String, Codable, CaseIterable, Sendable {
         case .tired: return "Sleepy"
         case .happy: return "Happy"
         case .content: return "Content"
-        case .egg: return "Warm and cozy"
+        case .egg: return "Snoozing in the den"
         }
     }
 
@@ -73,7 +74,7 @@ public enum Mood: String, Codable, CaseIterable, Sendable {
         case .tired: return "🥱"
         case .happy: return "💖"
         case .content: return "🙂"
-        case .egg: return "🥚"
+        case .egg: return "🦊"
         }
     }
 }

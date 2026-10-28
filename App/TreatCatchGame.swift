@@ -36,7 +36,7 @@ struct TreatCatchGame: View {
                 CreatureView(
                     stage: state.stage, form: state.adultForm, mood: .happy,
                     activity: engine.lastCatchAge < 0.4 ? .dancing : .bouncing,
-                    hue: state.hue, phase: engine.time
+                    phase: engine.time
                 )
                 .frame(width: 110, height: 110)
                 .position(x: engine.playerX * geo.size.width, y: TreatCatchEngine.playerY * geo.size.height)

@@ -4,17 +4,17 @@ public enum Evolution {
     /// Picks the adult form from the care history.
     public static func adultForm(for care: CareLog) -> AdultForm {
         let average = care.averageWellbeing
-        if average < 0.45 { return .cloud }
+        if average < 0.45 { return .dragon }
 
         let total = Double(max(1, care.feeds + care.plays + care.pets))
         let petShare = Double(care.pets) / total
         let playShare = Double(care.plays) / total
         let feedShare = Double(care.feeds) / total
 
-        if average > 0.72 && petShare >= 0.4 { return .sparkle }
-        if playShare >= 0.4 { return .bouncy }
-        if feedShare >= 0.45 { return .gourmet }
-        return .sprout
+        if average > 0.72 && petShare >= 0.4 { return .kitsune }
+        if playShare >= 0.4 { return .bunny }
+        if feedShare >= 0.45 { return .cat }
+        return .fox
     }
 
     /// When the next stage begins, or nil once adult.

@@ -69,7 +69,7 @@ final class CompanionModel: ObservableObject {
         state = newState.advanced(to: Date())
     }
 
-    /// Starts over with a fresh egg, keeping the name.
+    /// Starts over with a newborn kit, keeping the name.
     func startOver() {
         let fresh = PetState(name: state.name)
         store.save(fresh)

@@ -20,7 +20,7 @@ public enum Activity: String, Codable, CaseIterable, Sendable {
         case .beingPetted: return "Enjoying cuddles"
         case .sleeping: return "Fast asleep"
         case .sulking: return "Waiting for you"
-        case .wobbling: return "Wobbling"
+        case .wobbling: return "Snoozing in the den"
         }
     }
 }

@@ -34,8 +34,8 @@ enum ReminderScheduler {
         case .dirty: return "I'm getting a bit grubby. Bath time? 🫧"
         case .evolving:
             switch state.stage {
-            case .egg: return "The egg is shaking… something is about to hatch! 🥚"
-            case .baby: return "\(state.name) is growing up! Come see 🌱"
+            case .egg: return "\(state.name) is stretching… they are about to wake up! 🦊"
+            case .baby: return "\(state.name) is growing up! Come see 🦊"
             default: return "\(state.name) is changing… come see who they've become! ✨"
             }
         }

@@ -82,7 +82,7 @@ struct HomeView: View {
         let s = model.state
         let age = Int(s.age(at: Date()) / 86400)
         let stage = s.stage == .adult ? (s.adultForm?.displayName ?? "Adult") : s.stage.displayName
-        return s.stage == .egg ? "An egg, waiting to hatch" : "\(stage) · day \(age + 1)"
+        return s.stage == .egg ? "A newborn, asleep in the den" : "\(stage) · day \(age + 1)"
     }
 
     private func stage(dark: Bool) -> some View {
@@ -92,7 +92,7 @@ struct HomeView: View {
                 .offset(y: 30)
             TimelineView(.animation) { context in
                 let activity = Forecast.activity(for: model.state, at: context.date)
-                CreatureView(state: model.state, activity: activity, at: context.date,
+                CreatureView(state: model.state, activity: activity,
                              phase: context.date.timeIntervalSinceReferenceDate)
             }
             .frame(maxWidth: 300, maxHeight: 300)
@@ -123,7 +123,7 @@ struct HomeView: View {
             if s.stage != .egg { Stats(state: s) }
             else {
                 ProgressView(value: min(1, s.age(at: Date()) / Rules.hatchAfter)) {
-                    Text("Hatching… pet the egg to keep it warm").font(.subheadline)
+                    Text("Waking up soon… a gentle pet keeps them cozy").font(.subheadline)
                 }
             }
         }
@@ -205,17 +205,17 @@ struct CelebrationView: View {
 
     private var title: String {
         switch stage {
-        case .egg: return "A new egg!"
-        case .baby: return "It hatched!"
-        case .child: return "\(state.name) grew up!"
+        case .egg: return "A new arrival!"
+        case .baby: return "\(state.name) woke up!"
+        case .child: return "\(state.name) is growing up!"
         case .adult: return "\(state.name) became \(state.adultForm?.displayName ?? "an adult")!"
         }
     }
 
     private var detail: String {
         switch stage {
-        case .egg: return "Keep it warm and it will hatch soon."
-        case .baby: return "Say hello to \(state.name). Feed, play and cuddle to help them grow."
+        case .egg: return "A tiny kit is asleep in the den. They will wake up soon."
+        case .baby: return "Say hello to \(state.name)! Feed, play and cuddle to help them grow."
         case .child: return "How you care for \(state.name) now decides who they become."
         case .adult: return state.adultForm?.blurb ?? ""
         }

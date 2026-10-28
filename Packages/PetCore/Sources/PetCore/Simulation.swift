@@ -133,9 +133,9 @@ extension PetState {
         advance(to: date, calendar: calendar)
 
         if stage == .egg {
-            guard action == .pet else { return .refused("It's still an egg. Try petting it!") }
+            guard action == .pet else { return .refused("\(name) is a newborn, fast asleep in the den. Try a gentle pet!") }
             recordAction(action, at: date)
-            return .done("The egg wiggles happily.")
+            return .done("\(name) wriggles and snuggles deeper.")
         }
 
         if isAsleep(calendar: calendar) {
@@ -192,7 +192,7 @@ extension PetState {
     @discardableResult
     public mutating func tuckIn(at date: Date = Date(), calendar: Calendar = .current) -> ActionOutcome {
         advance(to: date, calendar: calendar)
-        guard stage != .egg else { return .refused("Eggs don't need tucking in.") }
+        guard stage != .egg else { return .refused("Newborns are already asleep.") }
         if isAsleep(calendar: calendar) { return .refused("\(name) is already asleep.") }
         if energy > 0.6 { return .refused("\(name) isn't sleepy yet.") }
         isNapping = true

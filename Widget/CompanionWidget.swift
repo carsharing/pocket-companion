@@ -61,7 +61,7 @@ struct CompanionWidgetView: View {
 }
 
 private func creature(_ entry: CompanionEntry) -> CreatureView {
-    CreatureView(state: entry.state, activity: entry.activity, at: entry.date)
+    CreatureView(state: entry.state, activity: entry.activity)
 }
 
 private struct SmallView: View {
@@ -114,7 +114,7 @@ private struct MediumView: View {
                     Text("\(state.mood().emoji) \(state.mood().label)").font(.caption2.weight(.semibold))
                 }
                 if state.stage == .egg {
-                    Text("Hatching soon… tap Pet to keep it warm")
+                    Text("Asleep in the den… waking up soon")
                         .font(.caption)
                         .opacity(0.8)
                     Spacer(minLength: 0)

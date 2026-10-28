@@ -113,26 +113,26 @@ final class PetCoreTests: XCTestCase {
     func testAdultFormFollowsCare() {
         var neglected = CareLog()
         neglected.wellbeingSeconds = 0.2; neglected.trackedSeconds = 1
-        XCTAssertEqual(Evolution.adultForm(for: neglected), .cloud)
+        XCTAssertEqual(Evolution.adultForm(for: neglected), .dragon)
 
         var player = CareLog()
         player.wellbeingSeconds = 0.8; player.trackedSeconds = 1
         player.plays = 10; player.feeds = 5; player.pets = 3
-        XCTAssertEqual(Evolution.adultForm(for: player), .bouncy)
+        XCTAssertEqual(Evolution.adultForm(for: player), .bunny)
 
         var cuddler = player
         cuddler.pets = 20
-        XCTAssertEqual(Evolution.adultForm(for: cuddler), .sparkle)
+        XCTAssertEqual(Evolution.adultForm(for: cuddler), .kitsune)
 
         var foodie = CareLog()
         foodie.wellbeingSeconds = 0.6; foodie.trackedSeconds = 1
         foodie.feeds = 10; foodie.plays = 4; foodie.pets = 4
-        XCTAssertEqual(Evolution.adultForm(for: foodie), .gourmet)
+        XCTAssertEqual(Evolution.adultForm(for: foodie), .cat)
 
         var balanced = CareLog()
         balanced.wellbeingSeconds = 0.6; balanced.trackedSeconds = 1
         balanced.feeds = 5; balanced.plays = 5; balanced.pets = 5
-        XCTAssertEqual(Evolution.adultForm(for: balanced), .sprout)
+        XCTAssertEqual(Evolution.adultForm(for: balanced), .fox)
     }
 
     func testClockGoingBackwardsIsIgnored() {

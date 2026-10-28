@@ -54,11 +54,11 @@ struct SettingsView: View {
                 } header: {
                     Text("Who will they become?")
                 } footer: {
-                    Text("After 3 days your companion grows into an adult shaped by how you cared for them.")
+                    Text("After 3 days your young fox grows into one of these, depending on how you cared for them.")
                 }
 
                 Section {
-                    Button("Start over with a new egg", role: .destructive) { confirmingReset = true }
+                    Button("Start over with a new kit", role: .destructive) { confirmingReset = true }
                 }
             }
             .navigationTitle("Settings")
@@ -70,7 +70,7 @@ struct SettingsView: View {
                     }
                 }
             }
-            .confirmationDialog("Say goodbye to \(model.state.name) and start a new egg?", isPresented: $confirmingReset, titleVisibility: .visible) {
+            .confirmationDialog("Say goodbye to \(model.state.name) and welcome a new kit?", isPresented: $confirmingReset, titleVisibility: .visible) {
                 Button("Start over", role: .destructive) {
                     model.startOver()
                     dismiss()
